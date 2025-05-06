@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - FreshBite</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="logo"><i class="fas fa-leaf"></i> FreshBite</div>
+    <div class="nav-links">
+      <a href="index.html"><i class="fas fa-home"></i> Home</a>
+      <a href="recipe-details.html"><i class="fas fa-book-open"></i> Recipes</a>
+      <a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a>
+      <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+    </div>
+  </div>
+
+  <!-- Login Form -->
+  <section class="auth-form-section">
+    <div class="form-container">
+      <h2><i class="fas fa-sign-in-alt"></i> Login</h2>
+      <form id="loginForm">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="you@example.com" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter your password" required>
+
+        <button type="submit">Login</button>
+        <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+        <div class="message" id="loginMessage"></div>
+      </form>
+
+      <button class="google-login" onclick="googleLogin()">
+        <i class="fab fa-google"></i> Login with Google
+      </button>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 FreshBite. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Fake Google login
+    function googleLogin() {
+      alert("Google login is currently simulated. In real apps, use Firebase Auth or OAuth.");
+    }
+
+    // Handle login
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      const storedUser = JSON.parse(localStorage.getItem("freshbiteUser"));
+
+      const messageBox = document.getElementById("loginMessage");
+
+      if (!storedUser) {
+        messageBox.textContent = "No user registered. Please sign up first.";
+        return;
+      }
+
+      if (storedUser.email === email && storedUser.password === password) {
+        alert("Login successful! Welcome to FreshBite.");
+        window.location.href = "index.html"; // Redirect after login
+      } else {
+        messageBox.textContent = "Invalid email or password.";
+      }
+    });
+  </script>
+</body>
+</html>

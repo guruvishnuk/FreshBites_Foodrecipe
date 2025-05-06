@@ -1,0 +1,21 @@
+.google-login {
+    margin-top: 10px;
+    background: #db4437;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .google-login i {
+    margin-right: 8px;
+  }
+  .message {
+    margin-top: 10px;
+    color: red;
+    font-size: 0.9rem;
+  }
+</style>

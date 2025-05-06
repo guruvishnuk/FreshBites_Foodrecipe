@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vada Pav - FreshBite</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff8f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav {
+      background-color: #ff7043;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin: 0 10px;
+    }
+
+    .nav-links {
+      display: flex;
+    }
+
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+
+    .recipe-container {
+      max-width: 900px;
+      margin: 2rem auto;
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      overflow: hidden;
+      animation: fadeIn 0.6s ease-in;
+    }
+
+    .recipe-img {
+      width: 100%;
+      height: 350px;
+      object-fit: cover;
+    }
+
+    .recipe-video {
+      padding: 1.5rem;
+    }
+
+    .recipe-video iframe {
+      width: 100%;
+      height: 315px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border: none;
+    }
+
+    .recipe-content {
+      padding: 2rem;
+    }
+
+    .recipe-content h1 {
+      font-size: 2.2rem;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+
+    .recipe-content h3 {
+      color: #ff7043;
+      margin-top: 1.5rem;
+    }
+
+    ul, ol {
+      margin-left: 1.5rem;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 1.5rem;
+      background: #333;
+      color: white;
+      margin-top: 3rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .buy-ingredients-form {
+      margin-top: 2rem;
+    }
+
+    .buy-ingredients-form table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .buy-ingredients-form th,
+    .buy-ingredients-form td {
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+
+    .buy-ingredients-form input[type="text"] {
+      width: 90%;
+      padding: 0.4rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .cart-button {
+      margin-top: 1rem;
+      background-color: #ff7043;
+      color: white;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .cart-button:hover {
+      background-color: #e64a19;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-links">
+      <a href="index.html">🏠 Home</a>
+      <a href="recipe-details.html">Recipes</a>
+    </div>
+    <strong style="color:white;">FreshBite</strong>
+  </nav>
+
+  <!-- Recipe Section -->
+  <div class="recipe-container">
+    <img src="./images food/vadapav.jpeg" alt="Vada Pav" class="recipe-img">
+
+    <!-- Recipe Video -->
+    <!-- <div class="recipe-video">
+      <iframe src="https://www.youtube.com/embed/EW7x0OCaThg" title="Vada Pav Recipe" allowfullscreen></iframe>
+    </div> -->
+
+    <div class="recipe-content">
+      <h1>Vada Pav</h1>
+      <p>Vada Pav is Mumbai's favorite street snack—spicy potato fritters sandwiched between soft pav buns with chutneys and fried chili.</p>
+
+      <h3>🍔 Ingredients:</h3>
+      <ul>
+        <li>4 Pav buns</li>
+        <li>4 medium potatoes (boiled & mashed)</li>
+        <li>1 tsp mustard seeds</li>
+        <li>1/2 tsp turmeric powder</li>
+        <li>1 tsp ginger-garlic paste</li>
+        <li>2 green chilies (chopped)</li>
+        <li>Salt to taste</li>
+        <li>1 cup besan (gram flour)</li>
+        <li>Oil for frying</li>
+      </ul>
+
+      <h3>👨‍🍳 Instructions:</h3>
+      <ol>
+        <li>Prepare potato filling with mustard seeds, turmeric, green chili, and mashed potato.</li>
+        <li>Make small balls from filling and dip them in besan batter.</li>
+        <li>Deep fry until golden and crispy.</li>
+        <li>Slit pav, add green chutney, place vada inside, press and serve hot with fried chili.</li>
+      </ol>
+
+      <h3>🛒 Buy Ingredients:</h3>
+      <form action="cart.html" method="GET" class="buy-ingredients-form">
+        <table>
+          <thead>
+            <tr>
+              <th>Ingredient</th>
+              <th>Quantity</th>
+              <th>Add</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Pav buns</td>
+              <td><input type="text" name="pav" placeholder="e.g., 4 pcs" /></td>
+              <td><input type="checkbox" name="add_pav" /></td>
+            </tr>
+            <tr>
+              <td>Potatoes</td>
+              <td><input type="text" name="potatoes" placeholder="e.g., 4 pcs" /></td>
+              <td><input type="checkbox" name="add_potatoes" /></td>
+            </tr>
+            <tr>
+              <td>Mustard seeds</td>
+              <td><input type="text" name="mustard" placeholder="e.g., 1 tsp" /></td>
+              <td><input type="checkbox" name="add_mustard" /></td>
+            </tr>
+            <tr>
+              <td>Turmeric powder</td>
+              <td><input type="text" name="turmeric" placeholder="e.g., 1/2 tsp" /></td>
+              <td><input type="checkbox" name="add_turmeric" /></td>
+            </tr>
+            <tr>
+              <td>Green chilies</td>
+              <td><input type="text" name="chilies" placeholder="e.g., 2 pcs" /></td>
+              <td><input type="checkbox" name="add_chilies" /></td>
+            </tr>
+            <tr>
+              <td>Besan (gram flour)</td>
+              <td><input type="text" name="besan" placeholder="e.g., 1 cup" /></td>
+              <td><input type="checkbox" name="add_besan" /></td>
+            </tr>
+            <tr>
+              <td>Oil</td>
+              <td><input type="text" name="oil" placeholder="e.g., 500ml" /></td>
+              <td><input type="checkbox" name="add_oil" /></td>
+            </tr>
+          </tbody>
+        </table>
+        <br>
+        <button type="submit" class="cart-button">🛒 Add Selected to Cart</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 FreshBite. Taste the freshness!</p>
+  </footer>
+
+  <script>
+    document.querySelector('.buy-ingredients-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const ingredients = [
+        { name: "Pav buns", key: "pav", price: 20 },
+        { name: "Potatoes", key: "potatoes", price: 25 },
+        { name: "Mustard seeds", key: "mustard", price: 10 },
+        { name: "Turmeric powder", key: "turmeric", price: 5 },
+        { name: "Green chilies", key: "chilies", price: 8 },
+        { name: "Besan (gram flour)", key: "besan", price: 35 },
+        { name: "Oil", key: "oil", price: 50 },
+      ];
+
+      const selectedItems = [];
+
+      ingredients.forEach(item => {
+        const checked = document.querySelector(`input[name="add_${item.key}"]`).checked;
+        const quantity = document.querySelector(`input[name="${item.key}"]`).value;
+        if (checked && quantity.trim() !== "") {
+          selectedItems.push({
+            name: item.name,
+            quantity: quantity,
+            price: item.price
+          });
+        }
+      });
+
+      localStorage.setItem("cartItems", JSON.stringify(selectedItems));
+      window.location.href = "cart.html";
+    });
+  </script>
+</body>
+</html>

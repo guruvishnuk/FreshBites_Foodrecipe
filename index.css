@@ -1,0 +1,56 @@
+style>
+.dark-mode {
+  background-color: #121212;
+  color: #f0f0f0;
+}
+.dark-mode .navbar, .dark-mode .highlight-section, .dark-mode footer {
+  background-color: #1e1e1e;
+}
+.action-buttons {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 1000;
+}
+.dark-toggle, #topBtn {
+  background: #222;
+  color: #fff;
+  border: none;
+  padding: 6px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 14px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#topBtn {
+  display: none;
+  background-color: #007BFF;
+  transition: background 0.3s, transform 0.3s;
+}
+#topBtn:hover {
+  background-color: #0056b3;
+  transform: scale(1.1);
+}
+.testimonial-section {
+  background: #f9f9f9;
+  padding: 40px 20px;
+  text-align: center;
+}
+.testimonial-section h2 {
+  margin-bottom: 20px;
+}
+.testimonial {
+  max-width: 800px;
+  margin: 0 auto;
+  font-style: italic;
+  color: #555;
+}
+</style>

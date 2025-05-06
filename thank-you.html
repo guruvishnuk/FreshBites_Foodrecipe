@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Thank You - FreshBite</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #fff8f2;
+      color: #333;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    body.dark-mode {
+      background-color: #1e1e1e;
+      color: #eee;
+    }
+
+    .nav {
+      background-color: #ff7043;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin: 0 10px;
+      transition: color 0.3s ease;
+    }
+
+    .nav a:hover {
+      color: #e0e0e0;
+    }
+
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .toggle-container input[type="checkbox"] {
+      width: 40px;
+      height: 20px;
+    }
+
+    .thankyou-container {
+      max-width: 800px;
+      margin: 3rem auto;
+      background: white;
+      padding: 2rem 2.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    body.dark-mode .thankyou-container {
+      background-color: #2a2a2a;
+    }
+
+    h1 {
+      color: #4caf50;
+      margin-bottom: 1rem;
+    }
+
+    .summary {
+      margin-top: 2rem;
+      text-align: left;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1.5rem;
+    }
+
+    th, td {
+      padding: 1rem;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    body.dark-mode th,
+    body.dark-mode td {
+      border-bottom: 1px solid #444;
+    }
+
+    .total {
+      text-align: right;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #333;
+    }
+
+    body.dark-mode .total {
+      color: #eee;
+    }
+
+    .payment-method {
+      font-size: 1.1rem;
+      margin-top: 1rem;
+      color: #555;
+    }
+
+    body.dark-mode .payment-method {
+      color: #ccc;
+    }
+
+    .buttons {
+      margin-top: 2rem;
+    }
+
+    .buttons a {
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      background-color: #ff7043;
+      color: white;
+      font-size: 1.1rem;
+      margin: 0 10px;
+      display: inline-block;
+    }
+
+    .buttons a:hover {
+      background-color: #e85c2f;
+    }
+
+    footer {
+      text-align: center;
+      background: #333;
+      color: white;
+      padding: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 600px) {
+      .thankyou-container {
+        padding: 1.5rem;
+      }
+
+      .buttons a {
+        display: block;
+        margin: 10px auto;
+      }
+
+      .summary {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div>
+      <a href="index.html"><i class="fas fa-home"></i> Home</a>
+      <a href="recipe-details.html"><i class="fas fa-book-open"></i> Recipes</a>
+      <a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a>
+      <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+    </div>
+    <div class="toggle-container">
+      <label for="modeToggle">🌙</label>
+      <input type="checkbox" id="modeToggle" />
+    </div>
+  </nav>
+
+  <div class="thankyou-container">
+    <h1>🎉 Thank You! Your Order is Confirmed</h1>
+    <p>We appreciate your trust in <strong>FreshBite</strong>. Your delicious ingredients will arrive soon! 🚚</p>
+
+    <div class="summary" id="order-summary">
+      <!-- Order summary gets populated via JS -->
+    </div>
+
+    <div class="buttons">
+      <a href="index.html">🏠 Home</a>
+      <a href="recipe-details.html">🍽️ More Recipes</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 FreshBite. Taste the freshness!</p>
+  </footer>
+
+  <script>
+    // Toggle Dark Mode
+    const toggle = document.getElementById("modeToggle");
+    toggle.addEventListener("change", () => {
+      document.body.classList.toggle("dark-mode");
+    });
+
+    // Generate order summary
+    const cartData = JSON.parse(localStorage.getItem("cartItems")) || [];
+    const summaryContainer = document.getElementById("order-summary");
+
+    let total = 0;
+
+    if (cartData.length === 0) {
+      summaryContainer.innerHTML = "<p style='text-align:center; font-size:1.2rem;'>No items found in your order.</p>";
+    } else {
+      let table = `
+        <h2>🧾 Order Summary</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Ingredient</th>
+              <th>Quantity</th>
+              <th>Price (₹)</th>
+            </tr>
+          </thead>
+          <tbody>`;
+
+      cartData.forEach(item => {
+        total += item.price;
+        table += `
+          <tr>
+            <td>${item.name}</td>
+            <td>${item.quantity}</td>
+            <td>₹${item.price}</td>
+          </tr>`;
+      });
+
+      table += `
+          </tbody>
+        </table>
+        <div class="total">Total: ₹${total}</div>
+        <div class="payment-method"><strong>Payment Method:</strong> Cash on Delivery</div>`;
+
+      summaryContainer.innerHTML = table;
+
+      // Optionally clear cart after successful order
+      localStorage.removeItem("cartItems");
+    }
+  </script>
+</body>
+</html>

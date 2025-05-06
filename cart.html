@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Cart - FreshBite</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    /* Existing CSS remains unchanged */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #fff8f2;
+      color: #333;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    body.dark-mode {
+      background-color: #1e1e1e;
+      color: #eee;
+    }
+
+    .nav {
+      background-color: #ff7043;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin: 0 10px;
+      transition: color 0.3s ease;
+    }
+
+    .nav a:hover {
+      color: #e0e0e0;
+    }
+
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .toggle-container input[type="checkbox"] {
+      width: 40px;
+      height: 20px;
+    }
+
+    .cart-container {
+      max-width: 800px;
+      margin: 2rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    body.dark-mode .cart-container {
+      background-color: #2a2a2a;
+    }
+
+    h1 {
+      color: #ff7043;
+      margin-bottom: 1.5rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1.5rem;
+    }
+
+    th, td {
+      padding: 1rem;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    .total {
+      text-align: right;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #333;
+    }
+
+    body.dark-mode .total {
+      color: #ddd;
+    }
+
+    .empty-message {
+      text-align: center;
+      font-size: 1.2rem;
+      color: #999;
+      margin-top: 3rem;
+    }
+
+    .payment-options {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .pay-btn {
+      margin: 10px;
+      padding: 10px 20px;
+      background-color: #ff7043;
+      border: none;
+      color: white;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .pay-btn:hover {
+      background-color: #e85c2f;
+    }
+
+    .cod {
+      background-color: #4caf50;
+    }
+
+    .cod:hover {
+      background-color: #388e3c;
+    }
+
+    .qr-section {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    #qrcode {
+      margin-top: 1rem;
+      display: inline-block;
+    }
+
+    footer {
+      text-align: center;
+      background: #333;
+      color: white;
+      padding: 1.5rem;
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div>
+      <a href="index.html"><i class="fas fa-home"></i> Home</a>
+      <a href="recipe-details.html"><i class="fas fa-book-open"></i> Recipes</a>
+      <a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a>
+      <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+    </div>
+    <div class="toggle-container">
+      <label for="modeToggle">🌙</label>
+      <input type="checkbox" id="modeToggle" />
+    </div>
+  </nav>
+
+  <div class="cart-container" id="cart">
+    <h1>🛒 Your Cart</h1>
+    <div id="cart-content"></div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 FreshBite. Taste the freshness!</p>
+  </footer>
+
+  <script>
+    const toggle = document.getElementById("modeToggle");
+    toggle.addEventListener("change", () => {
+      document.body.classList.toggle("dark-mode");
+    });
+
+    const cartData = JSON.parse(localStorage.getItem("cartItems")) || [];
+    const cartContent = document.getElementById("cart-content");
+
+    let total = 0;
+
+    if (cartData.length === 0) {
+      cartContent.innerHTML = "<p class='empty-message'>Your cart is empty.</p>";
+    } else {
+      let table = `<table>
+        <thead>
+          <tr>
+            <th>Ingredient</th>
+            <th>Quantity</th>
+            <th>Price (₹)</th>
+          </tr>
+        </thead>
+        <tbody>`;
+
+      cartData.forEach(item => {
+        total += item.price;
+        table += `
+          <tr>
+            <td>${item.name}</td>
+            <td>${item.quantity}</td>
+            <td>₹${item.price}</td>
+          </tr>`;
+      });
+
+      table += `</tbody></table>
+        <div class="total">Total: ₹${total}</div>
+
+        <div class="payment-options">
+          <h2>Choose Payment Method</h2>
+          <!-- <button class="pay-btn" onclick="payViaUPI('gpay')">Pay with GPay</button> -->
+          <!-- <button class="pay-btn" onclick="payViaUPI('phonepe')">Pay with PhonePe</button> -->
+          <!-- <button class="pay-btn" onclick="payViaUPI('paytm')">Pay with Paytm</button> -->
+          <button class="pay-btn cod" onclick="confirmOrder()">Cash on Delivery</button>
+        </div>
+
+        <div class="qr-section">
+          <h3>Or scan this QR to pay via any UPI app</h3>
+          <div id="qrcode"></div>
+        </div>`;
+
+      cartContent.innerHTML = table;
+
+      // Generate QR on load
+      generateUPIQR();
+    }
+
+    function payViaUPI(app) {
+      const upiId = "9686715615@axl";
+      const payeeName = "FreshBite";
+      const upiLink = `upi://pay?pa=${upiId}&pn=${payeeName}&am=${total}&cu=INR`;
+
+      let link;
+
+      switch (app) {
+        case 'gpay':
+          link = `intent://${upiLink}#Intent;package=com.google.android.apps.nbu.paisa.user;end`;
+          break;
+        case 'phonepe':
+          link = `intent://${upiLink}#Intent;package=com.phonepe.app;end`;
+          break;
+        case 'paytm':
+          link = `intent://${upiLink}#Intent;package=net.one97.paytm;end`;
+          break;
+      }
+
+      // Redirect to the "Thank You" page after payment
+      setTimeout(() => {
+        window.location.href = "thankyou.html";
+      }, 2000); // Wait for 2 seconds after payment (adjust as needed)
+      
+      window.location.href = link;
+    }
+
+    function confirmOrder() {
+      // When Cash on Delivery is selected
+      alert('Cash on Delivery selected. Your order has been placed!');
+      setTimeout(() => {
+        window.location.href = "thank-you.html";
+      }, 2000); // Wait for 2 seconds before redirecting
+    }
+
+    function generateUPIQR() {
+      const upiId = "9686715615@axl";
+      const payeeName = "FreshBite";
+      const upiLink = `upi://pay?pa=${upiId}&pn=${payeeName}&am=${total}&cu=INR`;
+
+      const qrContainer = document.getElementById("qrcode");
+      qrContainer.innerHTML = ""; // Clear old QR if any
+
+      new QRCode(qrContainer, {
+        text: upiLink,
+        width: 200,
+        height: 200
+      });
+    }
+  </script>
+</body>
+</html>
