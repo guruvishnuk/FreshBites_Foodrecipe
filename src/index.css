@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@source "../index.html";
+@source "../src";
 
 /* Custom global styles can go here if needed */
 body {

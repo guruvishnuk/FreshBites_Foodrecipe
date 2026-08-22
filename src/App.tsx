@@ -15,9 +15,9 @@ import { ThankYouPage } from './pages/ThankYouPage';
 
 export function App() {
   return (
-    <div className="app-container">
+    <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300 text-gray-900 dark:text-gray-100">
       <Navbar />
-      <main className="main-content">
+      <main className="flex-grow w-full max-w-7xl mx-auto py-6">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/recipes" element={<RecipesPage />} />
