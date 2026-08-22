@@ -24,14 +24,14 @@ function AbstractFoodModel() {
         </mesh>
         
         {/* Orbiting element 1 - Leaf/Garnish abstraction */}
-        <mesh position={[1.5, 1.2, 0.5]} rotation={[0.5, 0.5, 0]} castShadow>
+        <mesh position={[1.1, 1.1, 0.5]} rotation={[0.5, 0.5, 0]} castShadow>
           <torusGeometry args={[0.4, 0.1, 16, 32]} />
           <meshStandardMaterial color="#fbbf24" roughness={0.3} metalness={0.8} />
         </mesh>
         
         {/* Orbiting element 2 */}
-        <mesh position={[-1.2, -1, -0.5]} rotation={[1, 0, 0.5]} castShadow>
-          <icosahedronGeometry args={[0.5, 0]} />
+        <mesh position={[-1.1, -1, -0.5]} rotation={[1, 0, 0.5]} castShadow>
+          <icosahedronGeometry args={[0.4, 0]} />
           <meshStandardMaterial color="#f87171" roughness={0.1} metalness={0.5} />
         </mesh>
       </Float>
@@ -42,7 +42,7 @@ function AbstractFoodModel() {
 export const Hero3D = () => {
   return (
     <div className="w-full h-[500px] lg:h-[700px] relative cursor-grab active:cursor-grabbing">
-      <Canvas shadows camera={{ position: [0, 0, 5], fov: 45 }}>
+      <Canvas shadows camera={{ position: [0, 0, 6.5], fov: 45 }}>
         <ambientLight intensity={0.5} />
         <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} castShadow />
         <PresentationControls 
