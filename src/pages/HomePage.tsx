@@ -123,15 +123,19 @@ export const HomePage: React.FC = () => {
               viewport={{ once: true }}
               className="md:col-span-2 md:row-span-2"
             >
-              <Card className="h-full w-full overflow-hidden bg-gradient-to-br from-emerald-900 to-slate-900 text-white border-0 relative group">
-                <CardContent className="p-10 h-full flex flex-col justify-end relative z-10">
-                  <ChefHat className="w-16 h-16 text-emerald-400 mb-6" />
+              <Card className="h-full w-full overflow-hidden bg-gradient-to-br from-slate-900 to-slate-950 text-white border-slate-200 dark:border-slate-800 relative group">
+                <div className="absolute top-0 right-0 w-full h-1/2 md:w-1/2 md:h-full bg-[url('https://images.unsplash.com/photo-1556910103-1c02745a882a?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-40 group-hover:opacity-50 transition-opacity duration-700" />
+                <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-slate-950 via-slate-950/90 to-transparent" />
+                
+                <CardContent className="p-10 h-full flex flex-col justify-center relative z-10 w-full md:w-2/3">
+                  <div className="w-16 h-16 bg-emerald-500/20 rounded-2xl flex items-center justify-center mb-6 backdrop-blur-md border border-emerald-500/30">
+                    <ChefHat className="w-8 h-8 text-emerald-400" />
+                  </div>
                   <h3 className="text-3xl font-bold mb-4">Michelin-Inspired Recipes</h3>
-                  <p className="text-slate-300 text-lg max-w-md line-clamp-3">
+                  <p className="text-slate-300 text-lg leading-relaxed">
                     Unlock exclusive recipes crafted by world-renowned chefs. Our step-by-step interactive guides ensure perfect results, every single time.
                   </p>
                 </CardContent>
-                <div className="absolute top-0 right-0 w-full h-full bg-[url('https://images.unsplash.com/photo-1556910103-1c02745a882a?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-20 mix-blend-overlay group-hover:scale-105 transition-transform duration-700" />
               </Card>
             </motion.div>
 
@@ -142,13 +146,14 @@ export const HomePage: React.FC = () => {
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
             >
-              <Card className="h-full bg-white dark:bg-slate-900 hover:shadow-xl transition-shadow border-slate-200 dark:border-slate-800">
-                <CardContent className="p-8 flex flex-col justify-center h-full">
-                  <div className="w-12 h-12 bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 rounded-xl flex items-center justify-center mb-6">
-                    <Truck size={24} />
+              <Card className="h-full bg-slate-50 dark:bg-slate-900/80 hover:bg-white dark:hover:bg-slate-900 transition-colors border-slate-200 dark:border-slate-800 overflow-hidden relative">
+                <div className="absolute -right-8 -top-8 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl" />
+                <CardContent className="p-8 flex flex-col justify-start h-full relative z-10">
+                  <div className="w-14 h-14 bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400 rounded-2xl flex items-center justify-center mb-6 shadow-inner">
+                    <Truck size={28} />
                   </div>
-                  <h3 className="text-xl font-bold mb-2">Hyper-Local Sourcing</h3>
-                  <p className="text-slate-600 dark:text-slate-400">Ingredients picked at peak freshness from local farms and delivered in hours.</p>
+                  <h3 className="text-xl font-bold mb-3 text-slate-900 dark:text-white">Hyper-Local Sourcing</h3>
+                  <p className="text-slate-600 dark:text-slate-400 leading-relaxed">Ingredients picked at peak freshness from local farms and delivered in hours.</p>
                 </CardContent>
               </Card>
             </motion.div>
@@ -159,13 +164,14 @@ export const HomePage: React.FC = () => {
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
             >
-              <Card className="h-full bg-white dark:bg-slate-900 hover:shadow-xl transition-shadow border-slate-200 dark:border-slate-800">
-                <CardContent className="p-8 flex flex-col justify-center h-full">
-                  <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-xl flex items-center justify-center mb-6">
-                    <ShieldCheck size={24} />
+              <Card className="h-full bg-slate-50 dark:bg-slate-900/80 hover:bg-white dark:hover:bg-slate-900 transition-colors border-slate-200 dark:border-slate-800 overflow-hidden relative">
+                <div className="absolute -left-8 -bottom-8 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl" />
+                <CardContent className="p-8 flex flex-col justify-start h-full relative z-10">
+                  <div className="w-14 h-14 bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 rounded-2xl flex items-center justify-center mb-6 shadow-inner">
+                    <ShieldCheck size={28} />
                   </div>
-                  <h3 className="text-xl font-bold mb-2">Quality Guarantee</h3>
-                  <p className="text-slate-600 dark:text-slate-400">100% satisfaction guarantee. Not fresh? We replace it instantly, no questions asked.</p>
+                  <h3 className="text-xl font-bold mb-3 text-slate-900 dark:text-white">Quality Guarantee</h3>
+                  <p className="text-slate-600 dark:text-slate-400 leading-relaxed">100% satisfaction guarantee. Not fresh? We replace it instantly, no questions asked.</p>
                 </CardContent>
               </Card>
             </motion.div>
