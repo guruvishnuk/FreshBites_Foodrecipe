@@ -49,15 +49,15 @@ export const Navbar: React.FC = () => {
       {/* Brand Header */}
       <header className="bg-green-600 text-white py-4 text-center">
         <Link to="/" className="text-3xl font-bold flex items-center justify-center gap-2" onClick={closeMobileMenu}>
-          <i className="fas fa-utensils"></i> FreshBite
+          <img src="/logo.jpg" alt="FreshBites Logo" className="h-16 md:h-20 rounded-xl object-contain shadow-sm" />
         </Link>
-        <p className="text-sm mt-1 opacity-90">Your go-to place for delicious recipes and fresh ingredients</p>
+        <p className="text-sm mt-2 opacity-90 font-medium">Your go-to place for delicious recipes and fresh ingredients</p>
       </header>
 
       {/* Main Navbar */}
       <nav className="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-40 px-4 md:px-8 py-3 flex justify-between items-center">
         <Link to="/" className="text-xl font-bold text-green-600 flex items-center gap-2" onClick={closeMobileMenu}>
-          <i className="fas fa-leaf"></i> FreshBite
+          <img src="/logo.jpg" alt="FreshBites Logo" className="h-10 object-contain rounded-md" />
         </Link>
 
         {/* Mobile Hamburger Toggle */}
