@@ -1,60 +1,177 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { recipes } from '../data/recipes';
-import { RecipeCard } from '../components/RecipeCard';
-import { Slideshow } from '../components/Slideshow';
+import { motion } from 'framer-motion';
+import { ArrowRight, ChefHat, Truck, ShieldCheck, Star } from 'lucide-react';
+import { Button } from '../components/ui/button';
+import { Hero3D } from '../components/Hero3D';
+import { Card, CardContent } from '../components/ui/card';
+import { Badge } from '../components/ui/badge';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 }
+  },
+  exit: { opacity: 0, transition: { duration: 0.2 } }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
+};
 
 export const HomePage: React.FC = () => {
-  const popularRecipes = recipes.filter(r => r.popular).slice(0, 6);
-
   return (
-    <div className="bg-white dark:bg-gray-900 min-h-screen">
-      <section className="relative h-[60vh] min-h-[400px] flex items-center justify-center overflow-hidden">
-        <video autoPlay muted loop playsInline className="absolute w-full h-full object-cover z-0">
-          <source src="/video/2583492-hd_1920_1080_24fps.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        <div className="absolute inset-0 bg-black bg-opacity-50 z-10"></div>
-        <div className="relative z-20 text-center text-white px-4">
-          <h1 className="text-4xl md:text-6xl font-bold mb-4">Cook it. Love it. Share it.</h1>
-          <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto">Explore easy-to-follow recipes and order fresh ingredients online with one click.</p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/recipes" className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-md font-semibold transition flex items-center justify-center gap-2">
-              <i className="fas fa-search"></i> Explore Recipes
-            </Link>
-            <Link to="/cart" className="px-6 py-3 bg-white hover:bg-gray-100 text-gray-900 rounded-md font-semibold transition flex items-center justify-center gap-2">
-              <i className="fas fa-shopping-cart"></i> View Cart
-            </Link>
+    <motion.div 
+      variants={containerVariants} 
+      initial="hidden" 
+      animate="show" 
+      exit="exit"
+      className="w-full flex flex-col"
+    >
+      {/* Hero Section */}
+      <section className="relative min-h-[85vh] flex items-center pt-10 overflow-hidden">
+        {/* Background Gradients */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
+          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-emerald-500/20 blur-[100px]" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-amber-500/10 blur-[100px]" />
+        </div>
+
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            
+            {/* Left Copy */}
+            <motion.div variants={itemVariants} className="flex flex-col space-y-8 z-10">
+              <Badge variant="secondary" className="w-max px-4 py-1 text-sm font-medium border-emerald-500/30">
+                🚀 The Future of Culinary Delivery
+              </Badge>
+              
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.1]">
+                Master the Art of <br/>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-400">
+                  Premium Dining.
+                </span>
+              </h1>
+              
+              <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed font-light">
+                Savora combines world-class chef-curated recipes with hyper-local, farm-fresh ingredient delivery. Experience gastronomy reinvented.
+              </p>
+              
+              <div className="flex flex-wrap gap-4 pt-4">
+                <Link to="/recipes">
+                  <Button size="lg" className="rounded-full px-8 text-base shadow-lg shadow-emerald-500/25 group">
+                    Explore Recipes
+                    <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </Link>
+                <Link to="/about">
+                  <Button size="lg" variant="outline" className="rounded-full px-8 text-base bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm">
+                    How it Works
+                  </Button>
+                </Link>
+              </div>
+
+              <div className="flex items-center gap-4 pt-8 border-t border-slate-200 dark:border-slate-800">
+                <div className="flex -space-x-3">
+                  {[1,2,3,4].map(i => (
+                    <div key={i} className="w-10 h-10 rounded-full border-2 border-white dark:border-slate-950 bg-slate-200 dark:bg-slate-800" />
+                  ))}
+                </div>
+                <div className="flex flex-col">
+                  <div className="flex items-center gap-1 text-amber-500">
+                    {[1,2,3,4,5].map(i => <Star key={i} size={14} fill="currentColor" />)}
+                  </div>
+                  <span className="text-xs font-semibold text-slate-600 dark:text-slate-400">Trusted by 10,000+ Foodies</span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Right 3D Canvas */}
+            <motion.div variants={itemVariants} className="relative hidden lg:block">
+              <Hero3D />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-emerald-500/20 blur-[80px] -z-10 rounded-full" />
+            </motion.div>
+
           </div>
         </div>
       </section>
 
-      <div className="py-8">
-        <Slideshow />
-      </div>
+      {/* Bento Grid Features Section */}
+      <section className="py-24 bg-slate-50 dark:bg-slate-950 relative border-t border-slate-200 dark:border-slate-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.7 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white mb-4">
+              Enterprise-Grade <span className="text-emerald-500">Excellence</span>
+            </h2>
+            <p className="text-slate-600 dark:text-slate-400 text-lg max-w-2xl mx-auto">
+              We've engineered every aspect of Savora to deliver an unparalleled culinary experience straight to your kitchen.
+            </p>
+          </motion.div>
 
-      <section className="max-w-7xl mx-auto px-4 py-12">
-        <h2 className="text-3xl font-bold mb-8 flex items-center gap-2 text-gray-800 dark:text-gray-100">
-          <i className="fas fa-star text-yellow-400"></i> Popular Recipes
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {popularRecipes.map(recipe => (
-            <RecipeCard key={recipe.id} recipe={recipe} />
-          ))}
-        </div>
-      </section>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[300px]">
+            {/* Large Feature Card */}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="md:col-span-2 md:row-span-2"
+            >
+              <Card className="h-full w-full overflow-hidden bg-gradient-to-br from-emerald-900 to-slate-900 text-white border-0 relative group">
+                <CardContent className="p-10 h-full flex flex-col justify-end relative z-10">
+                  <ChefHat className="w-16 h-16 text-emerald-400 mb-6" />
+                  <h3 className="text-3xl font-bold mb-4">Michelin-Inspired Recipes</h3>
+                  <p className="text-slate-300 text-lg max-w-md line-clamp-3">
+                    Unlock exclusive recipes crafted by world-renowned chefs. Our step-by-step interactive guides ensure perfect results, every single time.
+                  </p>
+                </CardContent>
+                <div className="absolute top-0 right-0 w-full h-full bg-[url('https://images.unsplash.com/photo-1556910103-1c02745a882a?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-20 mix-blend-overlay group-hover:scale-105 transition-transform duration-700" />
+              </Card>
+            </motion.div>
 
-      <section className="bg-green-50 dark:bg-gray-800 py-16 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-8 text-gray-800 dark:text-gray-100">
-            <i className="fas fa-quote-left text-green-500 mr-2"></i> What Our Foodies Say
-          </h2>
-          <div className="bg-white dark:bg-gray-700 p-8 rounded-lg shadow-md italic text-gray-700 dark:text-gray-300">
-            <p className="text-xl mb-6">"FreshBite has made my cooking so much easier! I love how I can find a recipe and instantly shop the exact fresh ingredients delivered to my doorstep."</p>
-            <div className="font-semibold not-italic text-green-600 dark:text-green-400">– Ananya Sharma, Home Chef</div>
+            {/* Small Feature Cards */}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+            >
+              <Card className="h-full bg-white dark:bg-slate-900 hover:shadow-xl transition-shadow border-slate-200 dark:border-slate-800">
+                <CardContent className="p-8 flex flex-col justify-center h-full">
+                  <div className="w-12 h-12 bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 rounded-xl flex items-center justify-center mb-6">
+                    <Truck size={24} />
+                  </div>
+                  <h3 className="text-xl font-bold mb-2">Hyper-Local Sourcing</h3>
+                  <p className="text-slate-600 dark:text-slate-400">Ingredients picked at peak freshness from local farms and delivered in hours.</p>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
+              <Card className="h-full bg-white dark:bg-slate-900 hover:shadow-xl transition-shadow border-slate-200 dark:border-slate-800">
+                <CardContent className="p-8 flex flex-col justify-center h-full">
+                  <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-xl flex items-center justify-center mb-6">
+                    <ShieldCheck size={24} />
+                  </div>
+                  <h3 className="text-xl font-bold mb-2">Quality Guarantee</h3>
+                  <p className="text-slate-600 dark:text-slate-400">100% satisfaction guarantee. Not fresh? We replace it instantly, no questions asked.</p>
+                </CardContent>
+              </Card>
+            </motion.div>
           </div>
         </div>
       </section>
-    </div>
+    </motion.div>
   );
 };

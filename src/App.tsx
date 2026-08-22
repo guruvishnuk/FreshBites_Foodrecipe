@@ -1,5 +1,6 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 
@@ -14,21 +15,25 @@ import { AboutPage } from './pages/AboutPage';
 import { ThankYouPage } from './pages/ThankYouPage';
 
 export function App() {
+  const location = useLocation();
+
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300 text-gray-900 dark:text-gray-100">
+    <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300 text-slate-900 dark:text-slate-100 font-sans selection:bg-emerald-500 selection:text-white">
       <Navbar />
-      <main className="flex-grow w-full max-w-7xl mx-auto py-6">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/recipes" element={<RecipesPage />} />
-          <Route path="/recipe/:recipeId" element={<RecipeDetailPage />} />
-          <Route path="/cart" element={<CartPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/thank-you" element={<ThankYouPage />} />
-        </Routes>
+      <main className="flex-grow w-full pt-20"> {/* pt-20 to account for fixed navbar */}
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/recipes" element={<RecipesPage />} />
+            <Route path="/recipe/:recipeId" element={<RecipeDetailPage />} />
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/thank-you" element={<ThankYouPage />} />
+          </Routes>
+        </AnimatePresence>
       </main>
       <Footer />
     </div>

@@ -1,5 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
+import { Card, CardContent, CardFooter } from './ui/card';
+import { Badge } from './ui/badge';
+import { Button } from './ui/button';
 
 interface Recipe {
   id: string | number;
@@ -15,30 +19,35 @@ interface RecipeCardProps {
 
 export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col h-full">
-      <div className="relative h-48 overflow-hidden group">
+    <Card className="flex flex-col h-full overflow-hidden group hover:-translate-y-1 transition-all duration-300 hover:shadow-xl dark:hover:shadow-emerald-900/20 border-slate-200 dark:border-slate-800">
+      <div className="relative h-56 overflow-hidden">
         <img 
           src={recipe.image} 
           alt={recipe.title} 
           loading="lazy" 
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
-        <span className="absolute top-3 right-3 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow">
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <Badge className="absolute top-3 right-3 shadow-md">
           {recipe.category}
-        </span>
+        </Badge>
       </div>
-      <div className="p-5 flex flex-col flex-grow">
-        <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-2">{recipe.title}</h3>
-        <p className="text-gray-600 dark:text-gray-400 text-sm flex-grow mb-4 line-clamp-3">
+      <CardContent className="p-5 flex flex-col flex-grow">
+        <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-2 leading-tight group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+          {recipe.title}
+        </h3>
+        <p className="text-slate-600 dark:text-slate-400 text-sm flex-grow mb-4 line-clamp-3 leading-relaxed">
           {recipe.description}
         </p>
-        <Link 
-          to={`/recipe/${recipe.id}`} 
-          className="inline-block mt-auto text-center px-4 py-2 bg-green-50 dark:bg-gray-700 text-green-600 dark:text-green-400 font-semibold rounded-md hover:bg-green-100 dark:hover:bg-gray-600 transition"
-        >
-          View Recipe <i className="fas fa-arrow-right ml-1"></i>
+      </CardContent>
+      <CardFooter className="px-5 pb-5 pt-0 mt-auto">
+        <Link to={`/recipe/${recipe.id}`} className="w-full">
+          <Button variant="secondary" className="w-full group/btn">
+            View Recipe 
+            <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+          </Button>
         </Link>
-      </div>
-    </div>
+      </CardFooter>
+    </Card>
   );
 };

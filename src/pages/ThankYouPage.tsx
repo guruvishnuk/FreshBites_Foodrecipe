@@ -1,50 +1,82 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { CheckCircle, Home, Utensils, ArrowRight } from 'lucide-react';
+import { Button } from '../components/ui/button';
 
 export const ThankYouPage: React.FC = () => {
   return (
-    <div className="flex flex-col items-center justify-center py-16 px-4 min-h-[60vh]">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 md:p-12 text-center max-w-2xl w-full border-t-4 border-green-500">
-        <div className="mb-6 animate-bounce">
-          <i className="fas fa-check-circle text-6xl md:text-7xl text-green-500"></i>
-        </div>
-        <h1 className="text-3xl md:text-4xl font-extrabold text-gray-800 dark:text-gray-100 mb-4">🎉 Order Confirmed!</h1>
-        <p className="text-lg text-gray-600 dark:text-gray-300 mb-10 leading-relaxed">
-          We appreciate your trust in <strong className="text-green-600 dark:text-green-400">FreshBite</strong>. Your fresh ingredients are being packed with care and will arrive soon! 🚚
+    <motion.div 
+      initial={{ opacity: 0, scale: 0.95 }} 
+      animate={{ opacity: 1, scale: 1 }} 
+      exit={{ opacity: 0 }}
+      className="min-h-[70vh] flex flex-col items-center justify-center py-16 px-4"
+    >
+      <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl p-10 md:p-16 text-center max-w-2xl w-full border border-slate-100 dark:border-slate-800 relative overflow-hidden">
+        {/* Confetti-like background blob */}
+        <div className="absolute -top-20 -right-20 w-40 h-40 bg-emerald-500/20 blur-3xl rounded-full" />
+        <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-teal-500/20 blur-3xl rounded-full" />
+
+        <motion.div 
+          initial={{ scale: 0 }}
+          animate={{ scale: 1, rotate: [0, 10, -10, 0] }}
+          transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
+          className="mb-8 relative z-10 flex justify-center"
+        >
+          <div className="w-24 h-24 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center">
+            <CheckCircle className="w-12 h-12 text-emerald-500" />
+          </div>
+        </motion.div>
+        
+        <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-6 relative z-10 tracking-tight">
+          Order Confirmed!
+        </h1>
+        
+        <p className="text-lg text-slate-600 dark:text-slate-300 mb-12 leading-relaxed relative z-10 font-medium">
+          Thank you for choosing <span className="text-emerald-600 dark:text-emerald-400 font-bold">Savora</span>. Your premium ingredients are being meticulously packed and will arrive shortly.
         </p>
 
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8 mb-12 text-sm md:text-base">
-          <div className="flex flex-col items-center gap-2 text-green-600 dark:text-green-400 font-semibold">
-            <div className="w-12 h-12 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center shadow-inner">
-              <i className="fas fa-clipboard-check text-xl"></i>
+        {/* Animated Progress Steps */}
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6 mb-12 relative z-10">
+          <div className="flex flex-col items-center gap-2">
+            <div className="w-12 h-12 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-lg shadow-emerald-500/30">
+              1
             </div>
-            <span>Order Placed</span>
+            <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400">Placed</span>
           </div>
-          <div className="hidden sm:block w-8 border-b-2 border-dashed border-gray-300 dark:border-gray-600"></div>
-          <div className="flex flex-col items-center gap-2 text-gray-400 dark:text-gray-500 font-medium">
-            <div className="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
-              <i className="fas fa-box-open text-xl"></i>
-            </div>
-            <span>Packing Fresh</span>
+          <div className="hidden sm:block w-12 border-b-2 border-dashed border-emerald-500/50"></div>
+          <div className="flex flex-col items-center gap-2">
+            <motion.div 
+              animate={{ opacity: [0.5, 1, 0.5] }} 
+              transition={{ repeat: Infinity, duration: 2 }}
+              className="w-12 h-12 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 flex items-center justify-center border-2 border-emerald-500"
+            >
+              2
+            </motion.div>
+            <span className="text-sm font-bold text-slate-700 dark:text-slate-300">Packing</span>
           </div>
-          <div className="hidden sm:block w-8 border-b-2 border-dashed border-gray-300 dark:border-gray-600"></div>
-          <div className="flex flex-col items-center gap-2 text-gray-400 dark:text-gray-500 font-medium">
-            <div className="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
-              <i className="fas fa-motorcycle text-xl"></i>
+          <div className="hidden sm:block w-12 border-b-2 border-dashed border-slate-200 dark:border-slate-700"></div>
+          <div className="flex flex-col items-center gap-2">
+            <div className="w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 flex items-center justify-center">
+              3
             </div>
-            <span>Out for Delivery</span>
+            <span className="text-sm font-medium text-slate-500">Delivery</span>
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row justify-center gap-4">
-          <Link to="/" className="px-6 py-3 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-semibold rounded-md transition flex items-center justify-center gap-2">
-            <i className="fas fa-home"></i> Back to Home
+        <div className="flex flex-col sm:flex-row justify-center gap-4 relative z-10">
+          <Link to="/">
+            <Button variant="outline" size="lg" className="w-full sm:w-auto h-12">
+              <Home className="w-4 h-4 mr-2" /> Back to Home
+            </Button>
           </Link>
-          <Link to="/recipes" className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-md transition flex items-center justify-center gap-2 shadow-md">
-            <i className="fas fa-utensils"></i> Explore More Recipes
+          <Link to="/recipes">
+            <Button size="lg" className="w-full sm:w-auto h-12 shadow-lg shadow-emerald-500/20 group">
+              Explore More <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+            </Button>
           </Link>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };

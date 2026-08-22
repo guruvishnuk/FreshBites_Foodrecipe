@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { Utensils, ArrowRight } from 'lucide-react';
+import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/input';
 
 export const SignupPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -28,7 +32,7 @@ export const SignupPage: React.FC = () => {
 
     const newUser = { email, password };
     localStorage.setItem('freshbiteUser', JSON.stringify(newUser));
-    setMessage('Registration successful! Redirecting to login...');
+    setMessage('Registration successful! Redirecting...');
     setIsSuccess(true);
 
     setTimeout(() => {
@@ -37,67 +41,97 @@ export const SignupPage: React.FC = () => {
   };
 
   return (
-    <section className="flex justify-center items-center py-12 px-4 min-h-[70vh]">
-      <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
-        <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-gray-100 mb-6 flex justify-center items-center gap-2">
-          <i className="fas fa-user-plus text-green-500"></i> Sign Up
-        </h2>
+    <motion.div 
+      initial={{ opacity: 0 }} 
+      animate={{ opacity: 1 }} 
+      exit={{ opacity: 0 }}
+      className="min-h-[90vh] flex flex-col md:flex-row-reverse bg-white dark:bg-slate-950"
+    >
+      {/* Right Image Section */}
+      <div className="hidden md:flex md:w-1/2 relative bg-slate-900 overflow-hidden items-center justify-center">
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1556909211-36987daf7b4d?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-40 mix-blend-overlay" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/40 to-transparent" />
         
-        <form onSubmit={handleSignup} className="space-y-4">
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1" htmlFor="email">Email Address</label>
-            <input 
-              type="email" 
-              id="email" 
-              placeholder="you@example.com" 
-              required 
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none dark:bg-gray-700 dark:text-white transition"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1" htmlFor="password">Password</label>
-            <input 
-              type="password" 
-              id="password" 
-              placeholder="Create a password" 
-              required 
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none dark:bg-gray-700 dark:text-white transition"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1" htmlFor="confirmPassword">Confirm Password</label>
-            <input 
-              type="password" 
-              id="confirmPassword" 
-              placeholder="Confirm password" 
-              required 
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none dark:bg-gray-700 dark:text-white transition"
-            />
-          </div>
-
-          <button type="submit" className="w-full mt-6 py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded-md transition shadow">
-            Register
-          </button>
-          
-          <p className="text-center text-sm text-gray-600 dark:text-gray-400 mt-4">
-            Already have an account? <Link to="/login" className="text-green-600 hover:text-green-700 font-semibold transition">Login</Link>
+        <div className="relative z-10 max-w-lg p-12 text-white text-right">
+          <Utensils size={48} className="text-amber-400 mb-8 ml-auto" />
+          <h2 className="text-4xl lg:text-5xl font-bold mb-6 leading-tight">
+            Begin your culinary journey today.
+          </h2>
+          <p className="text-slate-300 text-lg">
+            Join Savora and get access to exclusive recipes, fast ingredient delivery, and a community of food lovers.
           </p>
-
-          {message && (
-            <div className={`mt-4 p-3 rounded-md text-sm font-medium ${isSuccess ? 'bg-green-100 text-green-700 border border-green-300' : 'bg-red-100 text-red-700 border border-red-300'}`}>
-              {message}
-            </div>
-          )}
-        </form>
+        </div>
       </div>
-    </section>
+
+      {/* Left Form Section */}
+      <div className="flex-1 flex flex-col justify-center px-6 py-12 sm:px-12 lg:px-24">
+        <motion.div 
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.2 }}
+          className="w-full max-w-md mx-auto"
+        >
+          <div className="mb-10">
+            <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Create an Account</h1>
+            <p className="text-slate-500 mt-2">Sign up in seconds to start ordering.</p>
+          </div>
+
+          <form onSubmit={handleSignup} className="space-y-5">
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Email Address</label>
+              <Input 
+                type="email" 
+                placeholder="chef@example.com" 
+                required 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Password</label>
+              <Input 
+                type="password" 
+                placeholder="Create a strong password" 
+                required 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Confirm Password</label>
+              <Input 
+                type="password" 
+                placeholder="Repeat password" 
+                required 
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+            </div>
+
+            <Button type="submit" className="w-full shadow-lg shadow-emerald-500/20 mt-2">
+              Create Account
+            </Button>
+            
+            {message && (
+              <motion.div 
+                initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
+                className={`p-3 rounded-md text-sm font-medium text-center ${isSuccess ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30' : 'bg-red-50 text-red-700 dark:bg-red-900/30'}`}
+              >
+                {message}
+              </motion.div>
+            )}
+          </form>
+
+          <p className="mt-10 text-center text-sm text-slate-600 dark:text-slate-400">
+            Already have an account?{' '}
+            <Link to="/login" className="font-semibold text-emerald-600 hover:text-emerald-500">
+              Log in instead <ArrowRight className="inline w-4 h-4 ml-1" />
+            </Link>
+          </p>
+        </motion.div>
+      </div>
+    </motion.div>
   );
 };
