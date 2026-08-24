@@ -9,7 +9,7 @@ import { Input } from '../components/ui/input';
 import { Card, CardContent } from '../components/ui/card';
 
 export const CartPage: React.FC = () => {
-  const { cartItems, removeFromCart, updateQuantity, clearCart, cartTotal } = useCart();
+  const { cartItems, ingredientItems, readyItems, ingredientTotal, readyTotal, removeFromCart, updateQuantity, clearCart, cartTotal } = useCart();
   const navigate = useNavigate();
   const [showQR, setShowQR] = useState(true);
 
@@ -21,6 +21,54 @@ export const CartPage: React.FC = () => {
     navigate('/thank-you');
     setTimeout(clearCart, 500);
   };
+
+  const renderCartItem = (item: any, originalIndex: number) => (
+    <motion.div 
+      key={`${item.name}-${originalIndex}`}
+      layout
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+    >
+      <Card className="hover:shadow-lg transition-shadow border-border rounded-[1.5rem] overflow-hidden">
+        <CardContent className="p-6 flex flex-col sm:flex-row items-start sm:items-center gap-6">
+          <div className="w-20 h-20 rounded-[1rem] bg-muted flex items-center justify-center flex-shrink-0 border border-border">
+            <span className="text-3xl font-display font-bold text-primary">{item.name.charAt(0)}</span>
+          </div>
+          
+          <div className="flex-1">
+            <h3 className="text-2xl font-bold text-foreground mb-1">{item.name}</h3>
+            {item.recipeTitle && (
+              <p className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-primary/50" />
+                For: {item.recipeTitle}
+              </p>
+            )}
+          </div>
+
+          <div className="flex items-center gap-6 w-full sm:w-auto mt-4 sm:mt-0 pt-4 sm:pt-0 border-t sm:border-0 border-border">
+            <div className="flex-1 sm:w-32">
+              <Input 
+                type="text" 
+                value={item.quantity} 
+                onChange={(e) => updateQuantity(originalIndex, e.target.value)}
+                className="text-center font-bold text-lg bg-background border-border rounded-xl h-12"
+              />
+            </div>
+            <div className="w-24 text-right font-display font-bold text-2xl text-primary">
+              ₹{item.price}
+            </div>
+            <button 
+              onClick={() => removeFromCart(originalIndex)} 
+              className="p-3 text-muted-foreground hover:text-accent-red hover:bg-accent-red/10 rounded-xl transition-colors"
+            >
+              <Trash2 className="w-6 h-6" />
+            </button>
+          </div>
+        </CardContent>
+      </Card>
+    </motion.div>
+  );
 
   return (
     <motion.div 
@@ -55,62 +103,39 @@ export const CartPage: React.FC = () => {
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
           {/* Cart Items List */}
-          <div className="lg:col-span-8 space-y-6">
+          <div className="lg:col-span-8 space-y-8">
             
-            {/* Phase 4 Header Stub */}
-            <div className="bg-primary/10 text-primary px-4 py-3 rounded-2xl flex items-center gap-3 font-bold border border-primary/20">
-              <ChefHat className="w-5 h-5" /> Ingredients & Prep Items
-            </div>
+            {readyItems && readyItems.length > 0 && (
+              <div className="space-y-6">
+                <div className="bg-primary/10 text-primary px-4 py-3 rounded-2xl flex items-center justify-between font-bold border border-primary/20">
+                  <div className="flex items-center gap-3">
+                    <Utensils className="w-5 h-5" /> Savora Kitchens (Ready-to-eat)
+                  </div>
+                  <span>₹{readyTotal}</span>
+                </div>
+                <AnimatePresence>
+                  {cartItems.map((item: any, index: number) => 
+                    item.type === 'ready' ? renderCartItem(item, index) : null
+                  )}
+                </AnimatePresence>
+              </div>
+            )}
 
-            <AnimatePresence>
-              {cartItems.map((item: any, index: number) => (
-                <motion.div 
-                  key={`${item.name}-${index}`}
-                  layout
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                >
-                  <Card className="hover:shadow-lg transition-shadow border-border rounded-[1.5rem] overflow-hidden">
-                    <CardContent className="p-6 flex flex-col sm:flex-row items-start sm:items-center gap-6">
-                      <div className="w-20 h-20 rounded-[1rem] bg-muted flex items-center justify-center flex-shrink-0 border border-border">
-                        <span className="text-3xl font-display font-bold text-primary">{item.name.charAt(0)}</span>
-                      </div>
-                      
-                      <div className="flex-1">
-                        <h3 className="text-2xl font-bold text-foreground mb-1">{item.name}</h3>
-                        {item.recipeTitle && (
-                          <p className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                            <span className="w-2 h-2 rounded-full bg-primary/50" />
-                            For: {item.recipeTitle}
-                          </p>
-                        )}
-                      </div>
-
-                      <div className="flex items-center gap-6 w-full sm:w-auto mt-4 sm:mt-0 pt-4 sm:pt-0 border-t sm:border-0 border-border">
-                        <div className="flex-1 sm:w-32">
-                          <Input 
-                            type="text" 
-                            value={item.quantity} 
-                            onChange={(e) => updateQuantity(index, e.target.value)}
-                            className="text-center font-bold text-lg bg-background border-border rounded-xl h-12"
-                          />
-                        </div>
-                        <div className="w-24 text-right font-display font-bold text-2xl text-primary">
-                          ₹{item.price}
-                        </div>
-                        <button 
-                          onClick={() => removeFromCart(index)} 
-                          className="p-3 text-muted-foreground hover:text-accent-red hover:bg-accent-red/10 rounded-xl transition-colors"
-                        >
-                          <Trash2 className="w-6 h-6" />
-                        </button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </AnimatePresence>
+            {ingredientItems && ingredientItems.length > 0 && (
+              <div className="space-y-6">
+                <div className="bg-secondary/10 text-secondary px-4 py-3 rounded-2xl flex items-center justify-between font-bold border border-secondary/20 mt-4">
+                  <div className="flex items-center gap-3">
+                    <ChefHat className="w-5 h-5" /> Savora Fresh (Ingredients)
+                  </div>
+                  <span>₹{ingredientTotal}</span>
+                </div>
+                <AnimatePresence>
+                  {cartItems.map((item: any, index: number) => 
+                    item.type === 'ingredient' ? renderCartItem(item, index) : null
+                  )}
+                </AnimatePresence>
+              </div>
+            )}
 
             <div className="flex justify-end pt-4">
               <Button variant="ghost" onClick={clearCart} className="text-accent-red hover:text-accent-red hover:bg-accent-red/10 font-bold rounded-xl">
@@ -129,10 +154,18 @@ export const CartPage: React.FC = () => {
               </div>
               
               <CardContent className="p-8 space-y-6">
-                <div className="flex justify-between items-center text-lg font-medium">
-                  <span className="text-muted-foreground">Item Subtotal</span>
-                  <strong className="text-foreground">₹{cartTotal}</strong>
-                </div>
+                {readyItems.length > 0 && (
+                  <div className="flex justify-between items-center text-lg font-medium text-muted-foreground">
+                    <span>Ready Meals</span>
+                    <span>₹{readyTotal}</span>
+                  </div>
+                )}
+                {ingredientItems.length > 0 && (
+                  <div className="flex justify-between items-center text-lg font-medium text-muted-foreground">
+                    <span>Ingredients</span>
+                    <span>₹{ingredientTotal}</span>
+                  </div>
+                )}
                 <div className="flex justify-between items-center text-lg font-medium">
                   <span className="text-muted-foreground">Platform Fee</span>
                   <strong className="text-foreground">₹15</strong>

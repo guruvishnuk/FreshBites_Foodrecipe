@@ -7,6 +7,7 @@ import { Footer } from './components/Footer';
 import { HomePage } from './pages/HomePage';
 import { RecipesPage } from './pages/RecipesPage';
 import { RecipeDetailPage } from './pages/RecipeDetailPage';
+import { RestaurantsPage } from './pages/RestaurantsPage';
 import { CartPage } from './pages/CartPage';
 import { CheckoutPage } from './pages/CheckoutPage';
 import { LoginPage } from './pages/LoginPage';

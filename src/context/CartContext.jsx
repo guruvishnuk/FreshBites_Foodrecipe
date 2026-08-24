@@ -18,11 +18,14 @@ export const CartProvider = ({ children }) => {
   }, [cartItems]);
 
   const addToCart = (items) => {
-    // items can be a single object or an array of objects
     setCartItems(prev => {
       const newItems = Array.isArray(items) ? items : [items];
-      // Append or replace
-      return [...prev, ...newItems];
+      // default to 'ingredient' if not specified
+      const itemsWithType = newItems.map(item => ({
+        ...item,
+        type: item.type || 'ingredient'
+      }));
+      return [...prev, ...itemsWithType];
     });
   };
 
@@ -45,10 +48,20 @@ export const CartProvider = ({ children }) => {
   };
 
   const cartTotal = cartItems.reduce((sum, item) => sum + (Number(item.price) || 0), 0);
+  
+  // Phase 4 additions: Grouping by type
+  const ingredientItems = cartItems.filter(item => item.type === 'ingredient');
+  const readyItems = cartItems.filter(item => item.type === 'ready');
+  const ingredientTotal = ingredientItems.reduce((sum, item) => sum + (Number(item.price) || 0), 0);
+  const readyTotal = readyItems.reduce((sum, item) => sum + (Number(item.price) || 0), 0);
 
   return (
     <CartContext.Provider value={{
       cartItems,
+      ingredientItems,
+      readyItems,
+      ingredientTotal,
+      readyTotal,
       addToCart,
       removeFromCart,
       updateQuantity,
