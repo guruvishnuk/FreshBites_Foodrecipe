@@ -45,19 +45,19 @@ export const SignupPage: React.FC = () => {
       initial={{ opacity: 0 }} 
       animate={{ opacity: 1 }} 
       exit={{ opacity: 0 }}
-      className="min-h-[90vh] flex flex-col md:flex-row-reverse bg-white dark:bg-slate-950"
+      className="min-h-[90vh] flex flex-col md:flex-row-reverse bg-background"
     >
       {/* Right Image Section */}
-      <div className="hidden md:flex md:w-1/2 relative bg-slate-900 overflow-hidden items-center justify-center">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1556909211-36987daf7b4d?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-40 mix-blend-overlay" />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/40 to-transparent" />
+      <div className="hidden md:flex md:w-1/2 relative bg-black overflow-hidden items-center justify-center">
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1556909211-36987daf7b4d?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-50 mix-blend-overlay" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
         
         <div className="relative z-10 max-w-lg p-12 text-white text-right">
-          <Utensils size={48} className="text-amber-400 mb-8 ml-auto" />
-          <h2 className="text-4xl lg:text-5xl font-bold mb-6 leading-tight">
+          <Utensils size={64} className="text-secondary mb-8 ml-auto drop-shadow-xl" />
+          <h2 className="text-5xl lg:text-6xl font-display font-extrabold mb-6 leading-tight tracking-tight text-white drop-shadow-lg">
             Begin your culinary journey today.
           </h2>
-          <p className="text-slate-300 text-lg">
+          <p className="text-white/80 text-xl font-medium drop-shadow-md">
             Join Savora and get access to exclusive recipes, fast ingredient delivery, and a community of food lovers.
           </p>
         </div>
@@ -72,61 +72,64 @@ export const SignupPage: React.FC = () => {
           className="w-full max-w-md mx-auto"
         >
           <div className="mb-10">
-            <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Create an Account</h1>
-            <p className="text-slate-500 mt-2">Sign up in seconds to start ordering.</p>
+            <h1 className="text-4xl font-display font-extrabold text-foreground tracking-tight">Create an Account</h1>
+            <p className="text-muted-foreground mt-2 font-medium">Sign up in seconds to start ordering.</p>
           </div>
 
-          <form onSubmit={handleSignup} className="space-y-5">
+          <form onSubmit={handleSignup} className="space-y-6">
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Email Address</label>
+              <label className="text-sm font-bold text-foreground">Email Address</label>
               <Input 
                 type="email" 
                 placeholder="chef@example.com" 
                 required 
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                className="h-14 bg-muted border-none rounded-2xl px-4"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Password</label>
+              <label className="text-sm font-bold text-foreground">Password</label>
               <Input 
                 type="password" 
                 placeholder="Create a strong password" 
                 required 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                className="h-14 bg-muted border-none rounded-2xl px-4"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Confirm Password</label>
+              <label className="text-sm font-bold text-foreground">Confirm Password</label>
               <Input 
                 type="password" 
                 placeholder="Repeat password" 
                 required 
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
+                className="h-14 bg-muted border-none rounded-2xl px-4"
               />
             </div>
 
-            <Button type="submit" className="w-full shadow-lg shadow-emerald-500/20 mt-2">
+            <Button type="submit" size="lg" className="w-full h-14 text-lg shadow-xl shadow-primary/20 rounded-2xl mt-2">
               Create Account
             </Button>
             
             {message && (
               <motion.div 
                 initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
-                className={`p-3 rounded-md text-sm font-medium text-center ${isSuccess ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30' : 'bg-red-50 text-red-700 dark:bg-red-900/30'}`}
+                className={`p-4 rounded-xl text-sm font-bold text-center border ${isSuccess ? 'bg-accent-green/20 text-green-800 dark:text-green-300 border-accent-green/30' : 'bg-accent-red/20 text-red-800 dark:text-red-300 border-accent-red/30'}`}
               >
                 {message}
               </motion.div>
             )}
           </form>
 
-          <p className="mt-10 text-center text-sm text-slate-600 dark:text-slate-400">
+          <p className="mt-10 text-center text-sm text-muted-foreground font-medium">
             Already have an account?{' '}
-            <Link to="/login" className="font-semibold text-emerald-600 hover:text-emerald-500">
+            <Link to="/login" className="font-bold text-primary hover:underline">
               Log in instead <ArrowRight className="inline w-4 h-4 ml-1" />
             </Link>
           </p>

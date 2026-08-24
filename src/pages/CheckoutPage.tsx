@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { MapPin, Phone, User, CheckCircle2, Navigation } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { MapPin, Phone, User, CheckCircle2, Navigation, CreditCard, Banknote, QrCode } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
@@ -12,11 +12,15 @@ export const CheckoutPage: React.FC = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    name: '', phone: '', address: '', city: '', pincode: '', paymentMethod: 'cod'
+    name: '', phone: '', address: '', city: '', pincode: '', paymentMethod: 'card'
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handlePaymentChange = (method: string) => {
+    setFormData(prev => ({ ...prev, paymentMethod: method }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -75,7 +79,7 @@ export const CheckoutPage: React.FC = () => {
                       <span className="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-lg shadow-md">2</span>
                       Delivery Address
                     </h3>
-                    <Button type="button" variant="outline" size="sm" className="rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-colors font-bold text-sm h-10 px-4">
+                    <Button type="button" variant="outline" size="sm" className="rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-colors font-bold text-sm h-10 px-4 hidden sm:flex">
                       <Navigation className="w-4 h-4 mr-2" /> Locate Me
                     </Button>
                   </div>
@@ -101,8 +105,64 @@ export const CheckoutPage: React.FC = () => {
                   </div>
                 </div>
 
-                <Button type="submit" size="lg" className="w-full text-xl shadow-xl shadow-primary/20 h-16 rounded-2xl mt-4">
-                  <CheckCircle2 className="w-6 h-6 mr-3" /> Place Order (COD)
+                <div className="h-px bg-border" />
+
+                {/* Payment Section (Phase 5 Gateway Sim) */}
+                <div>
+                  <h3 className="text-2xl font-display font-bold text-foreground mb-8 flex items-center gap-4">
+                    <span className="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-lg shadow-md">3</span>
+                    Payment Method
+                  </h3>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <button type="button" onClick={() => handlePaymentChange('card')} className={`flex flex-col items-center justify-center p-6 rounded-2xl border-2 transition-all ${formData.paymentMethod === 'card' ? 'border-primary bg-primary/10 text-primary' : 'border-border hover:border-primary/50 text-muted-foreground'}`}>
+                      <CreditCard className="w-8 h-8 mb-2" />
+                      <span className="font-bold">Card</span>
+                    </button>
+                    <button type="button" onClick={() => handlePaymentChange('upi')} className={`flex flex-col items-center justify-center p-6 rounded-2xl border-2 transition-all ${formData.paymentMethod === 'upi' ? 'border-primary bg-primary/10 text-primary' : 'border-border hover:border-primary/50 text-muted-foreground'}`}>
+                      <QrCode className="w-8 h-8 mb-2" />
+                      <span className="font-bold">UPI</span>
+                    </button>
+                    <button type="button" onClick={() => handlePaymentChange('cod')} className={`flex flex-col items-center justify-center p-6 rounded-2xl border-2 transition-all ${formData.paymentMethod === 'cod' ? 'border-primary bg-primary/10 text-primary' : 'border-border hover:border-primary/50 text-muted-foreground'}`}>
+                      <Banknote className="w-8 h-8 mb-2" />
+                      <span className="font-bold">COD</span>
+                    </button>
+                  </div>
+
+                  <AnimatePresence mode="wait">
+                    {formData.paymentMethod === 'card' && (
+                      <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="space-y-6 overflow-hidden">
+                        <div className="space-y-3 relative">
+                          <label className="text-sm font-bold text-foreground ml-1">Card Number</label>
+                          <CreditCard className="absolute bottom-4 left-4 w-5 h-5 text-muted-foreground" />
+                          <Input placeholder="0000 0000 0000 0000" className="pl-12 h-14 bg-muted border-none rounded-2xl" />
+                        </div>
+                        <div className="grid grid-cols-2 gap-8">
+                          <div className="space-y-3">
+                            <label className="text-sm font-bold text-foreground ml-1">Expiry Date</label>
+                            <Input placeholder="MM/YY" className="h-14 bg-muted border-none rounded-2xl text-center" />
+                          </div>
+                          <div className="space-y-3">
+                            <label className="text-sm font-bold text-foreground ml-1">CVV</label>
+                            <Input placeholder="123" type="password" maxLength={4} className="h-14 bg-muted border-none rounded-2xl text-center" />
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                    {formData.paymentMethod === 'upi' && (
+                      <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="overflow-hidden">
+                         <div className="p-6 bg-muted rounded-2xl border border-border text-center">
+                            <QrCode className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+                            <p className="font-bold text-foreground">Scan QR Code on the next page to pay securely via UPI.</p>
+                         </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                <Button type="submit" size="lg" className="w-full text-xl shadow-xl shadow-primary/20 h-16 rounded-2xl mt-8">
+                  <CheckCircle2 className="w-6 h-6 mr-3" /> 
+                  {formData.paymentMethod === 'cod' ? 'Place Order (COD)' : `Pay ₹${cartTotal + 15}`}
                 </Button>
               </form>
             </CardContent>

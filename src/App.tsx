@@ -26,7 +26,8 @@ export function App() {
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<HomePage />} />
             <Route path="/recipes" element={<RecipesPage />} />
-            <Route path="/recipe/:recipeId" element={<RecipeDetailPage />} />
+            <Route path="/recipes/:recipeId" element={<RecipeDetailPage />} />
+            <Route path="/restaurants" element={<RestaurantsPage />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/login" element={<LoginPage />} />
