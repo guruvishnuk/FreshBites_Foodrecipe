@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, Menu, X, UtensilsCrossed, User, Sun, Moon } from 'lucide-react';
+import { ShoppingCart, Menu, X, UtensilsCrossed, User, Sun, Moon, MapPin } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useTheme } from '../context/ThemeContext';
+import { useLocation as useGlobalLocation } from '../context/LocationContext';
 import { Button } from './ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../lib/utils';
@@ -10,6 +11,7 @@ import { cn } from '../lib/utils';
 export const Navbar: React.FC = () => {
   const { cartItems } = useCart();
   const { darkMode, toggleDarkMode } = useTheme();
+  const { coords, requestLocation, isLocating } = useGlobalLocation();
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -48,14 +50,29 @@ export const Navbar: React.FC = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
         {/* Brand */}
-        <Link to="/" className="flex items-center gap-2 group">
-          <div className="bg-primary text-primary-foreground p-2 rounded-2xl group-hover:rotate-12 group-hover:scale-110 transition-all duration-300 shadow-lg shadow-primary/30">
-            <UtensilsCrossed size={24} />
+        <div className="flex items-center gap-6">
+          <Link to="/" className="flex items-center gap-2 group">
+            <div className="bg-primary text-primary-foreground p-2 rounded-2xl group-hover:rotate-12 group-hover:scale-110 transition-all duration-300 shadow-lg shadow-primary/30">
+              <UtensilsCrossed size={24} />
+            </div>
+            <div>
+              <span className="text-2xl font-display font-bold tracking-tight text-foreground">Savora<span className="text-primary">.</span></span>
+            </div>
+          </Link>
+
+          {/* Location indicator (Desktop) */}
+          <div className="hidden lg:flex items-center gap-2">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={requestLocation} 
+              className={cn("rounded-full font-bold transition-all", coords ? "text-primary bg-primary/10 hover:bg-primary/20" : "text-muted-foreground hover:bg-muted hover:text-foreground")}
+            >
+              <MapPin size={16} className={cn("mr-2", isLocating && "animate-bounce")} />
+              {coords ? "Location Live" : "Detect Location"}
+            </Button>
           </div>
-          <div>
-            <span className="text-2xl font-display font-bold tracking-tight text-foreground">Savora<span className="text-primary">.</span></span>
-          </div>
-        </Link>
+        </div>
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8">
@@ -144,6 +161,15 @@ export const Navbar: React.FC = () => {
             className="md:hidden border-t border-border bg-background overflow-hidden"
           >
             <div className="flex flex-col px-4 py-6 space-y-4">
+              <Button 
+                variant="outline" 
+                onClick={requestLocation} 
+                className={cn("w-full justify-start font-bold", coords ? "text-primary border-primary bg-primary/10" : "text-muted-foreground")}
+              >
+                <MapPin size={18} className="mr-2" />
+                {coords ? "Location Active" : "Detect Location"}
+              </Button>
+              <div className="h-px bg-border my-2" />
               {navLinks.map((link) => (
                 <Link 
                   key={link.name} 

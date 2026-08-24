@@ -14,15 +14,17 @@ import { LoginPage } from './pages/LoginPage';
 import { SignupPage } from './pages/SignupPage';
 import { AboutPage } from './pages/AboutPage';
 import { ThankYouPage } from './pages/ThankYouPage';
+import { LocationProvider } from './context/LocationContext';
 
 export function App() {
   const location = useLocation();
 
   return (
-    <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300 text-slate-900 dark:text-slate-100 font-sans selection:bg-emerald-500 selection:text-white">
-      <Navbar />
-      <main className="flex-grow w-full pt-20"> {/* pt-20 to account for fixed navbar */}
-        <AnimatePresence mode="wait">
+    <LocationProvider>
+      <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300 text-slate-900 dark:text-slate-100 font-sans selection:bg-emerald-500 selection:text-white">
+        <Navbar />
+        <main className="flex-grow w-full pt-20"> {/* pt-20 to account for fixed navbar */}
+          <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<HomePage />} />
             <Route path="/recipes" element={<RecipesPage />} />
@@ -36,9 +38,10 @@ export function App() {
             <Route path="/thank-you" element={<ThankYouPage />} />
           </Routes>
         </AnimatePresence>
-      </main>
-      <Footer />
-    </div>
+        </main>
+        <Footer />
+      </div>
+    </LocationProvider>
   );
 }
 
