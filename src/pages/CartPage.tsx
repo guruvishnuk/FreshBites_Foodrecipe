@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { QRCodeSVG } from 'qrcode.react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingBag, Trash2, ArrowRight, Wallet, Truck } from 'lucide-react';
+import { ShoppingBag, Trash2, ArrowRight, Wallet, Truck, Utensils, ChefHat } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
@@ -25,37 +25,43 @@ export const CartPage: React.FC = () => {
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
-      className="w-full max-w-6xl mx-auto px-4 py-12"
+      className="w-full max-w-7xl mx-auto px-4 py-12"
     >
-      <div className="flex items-center justify-between mb-10 pb-6 border-b border-slate-200 dark:border-slate-800">
-        <h1 className="text-4xl font-extrabold text-slate-900 dark:text-white flex items-center gap-4 tracking-tight">
-          <ShoppingBag className="w-10 h-10 text-emerald-500" />
-          Your Order
+      <div className="flex items-center justify-between mb-10 pb-6 border-b border-border">
+        <h1 className="text-5xl font-display font-extrabold text-foreground flex items-center gap-4 tracking-tight">
+          <ShoppingBag className="w-12 h-12 text-primary" />
+          Your Cart
         </h1>
         {cartItems.length > 0 && (
-          <span className="text-lg font-medium text-slate-500 dark:text-slate-400">
+          <span className="text-xl font-bold text-muted-foreground bg-muted px-4 py-1 rounded-full">
             {cartItems.length} {cartItems.length === 1 ? 'item' : 'items'}
           </span>
         )}
       </div>
 
       {cartItems.length === 0 ? (
-        <motion.div initial={{ scale: 0.95 }} animate={{ scale: 1 }} className="bg-slate-50 dark:bg-slate-900/50 rounded-3xl border border-dashed border-slate-300 dark:border-slate-700 p-16 text-center max-w-2xl mx-auto">
-          <div className="w-24 h-24 bg-white dark:bg-slate-800 rounded-full shadow-md flex items-center justify-center mx-auto mb-6">
-            <ShoppingBag className="w-10 h-10 text-slate-400 dark:text-slate-500" />
+        <motion.div initial={{ scale: 0.95 }} animate={{ scale: 1 }} className="bg-muted/30 rounded-[3rem] border-2 border-dashed border-border p-16 text-center max-w-2xl mx-auto">
+          <div className="w-32 h-32 bg-background rounded-full shadow-lg flex items-center justify-center mx-auto mb-8 animate-bounce border border-border">
+            <ShoppingBag className="w-12 h-12 text-primary" />
           </div>
-          <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-3">Your cart is empty</h2>
-          <p className="text-slate-500 dark:text-slate-400 mb-8 text-lg">Looks like you haven't added any fresh ingredients yet.</p>
+          <h2 className="text-3xl font-display font-bold text-foreground mb-4">Your cart is empty</h2>
+          <p className="text-muted-foreground mb-10 text-lg font-medium">Looks like you haven't added any delicious food or ingredients yet.</p>
           <Link to="/recipes">
-            <Button size="lg" className="rounded-full shadow-lg shadow-emerald-500/20">
-              Discover Recipes <ArrowRight className="w-4 h-4 ml-2" />
+            <Button size="lg" className="rounded-full shadow-xl shadow-primary/20 text-lg px-8 h-14">
+              Explore Menu <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
           </Link>
         </motion.div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
           {/* Cart Items List */}
-          <div className="lg:col-span-8 space-y-4">
+          <div className="lg:col-span-8 space-y-6">
+            
+            {/* Phase 4 Header Stub */}
+            <div className="bg-primary/10 text-primary px-4 py-3 rounded-2xl flex items-center gap-3 font-bold border border-primary/20">
+              <ChefHat className="w-5 h-5" /> Ingredients & Prep Items
+            </div>
+
             <AnimatePresence>
               {cartItems.map((item: any, index: number) => (
                 <motion.div 
@@ -65,39 +71,39 @@ export const CartPage: React.FC = () => {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                 >
-                  <Card className="hover:shadow-md transition-shadow">
+                  <Card className="hover:shadow-lg transition-shadow border-border rounded-[1.5rem] overflow-hidden">
                     <CardContent className="p-6 flex flex-col sm:flex-row items-start sm:items-center gap-6">
-                      <div className="w-16 h-16 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center flex-shrink-0">
-                        <span className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">{item.name.charAt(0)}</span>
+                      <div className="w-20 h-20 rounded-[1rem] bg-muted flex items-center justify-center flex-shrink-0 border border-border">
+                        <span className="text-3xl font-display font-bold text-primary">{item.name.charAt(0)}</span>
                       </div>
                       
                       <div className="flex-1">
-                        <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">{item.name}</h3>
+                        <h3 className="text-2xl font-bold text-foreground mb-1">{item.name}</h3>
                         {item.recipeTitle && (
-                          <p className="text-sm text-slate-500 dark:text-slate-400 flex items-center gap-2">
-                            <span className="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-600" />
-                            From: {item.recipeTitle}
+                          <p className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                            <span className="w-2 h-2 rounded-full bg-primary/50" />
+                            For: {item.recipeTitle}
                           </p>
                         )}
                       </div>
 
-                      <div className="flex items-center gap-6 w-full sm:w-auto mt-4 sm:mt-0 pt-4 sm:pt-0 border-t sm:border-0 border-slate-100 dark:border-slate-800">
+                      <div className="flex items-center gap-6 w-full sm:w-auto mt-4 sm:mt-0 pt-4 sm:pt-0 border-t sm:border-0 border-border">
                         <div className="flex-1 sm:w-32">
                           <Input 
                             type="text" 
                             value={item.quantity} 
                             onChange={(e) => updateQuantity(index, e.target.value)}
-                            className="text-center font-medium bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700"
+                            className="text-center font-bold text-lg bg-background border-border rounded-xl h-12"
                           />
                         </div>
-                        <div className="w-24 text-right font-bold text-lg text-emerald-600 dark:text-emerald-400">
+                        <div className="w-24 text-right font-display font-bold text-2xl text-primary">
                           ₹{item.price}
                         </div>
                         <button 
                           onClick={() => removeFromCart(index)} 
-                          className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                          className="p-3 text-muted-foreground hover:text-accent-red hover:bg-accent-red/10 rounded-xl transition-colors"
                         >
-                          <Trash2 className="w-5 h-5" />
+                          <Trash2 className="w-6 h-6" />
                         </button>
                       </div>
                     </CardContent>
@@ -107,7 +113,7 @@ export const CartPage: React.FC = () => {
             </AnimatePresence>
 
             <div className="flex justify-end pt-4">
-              <Button variant="ghost" onClick={clearCart} className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/10">
+              <Button variant="ghost" onClick={clearCart} className="text-accent-red hover:text-accent-red hover:bg-accent-red/10 font-bold rounded-xl">
                 <Trash2 className="w-4 h-4 mr-2" /> Clear entire cart
               </Button>
             </div>
@@ -115,56 +121,62 @@ export const CartPage: React.FC = () => {
 
           {/* Order Summary & Checkout */}
           <div className="lg:col-span-4">
-            <Card className="sticky top-28 border-emerald-100 dark:border-slate-800 shadow-xl overflow-hidden">
-              <div className="bg-slate-50 dark:bg-slate-900/50 p-6 border-b border-slate-100 dark:border-slate-800">
-                <h2 className="text-xl font-bold text-slate-900 dark:text-white">Order Summary</h2>
+            <Card className="sticky top-28 border-border shadow-2xl overflow-hidden rounded-[2rem]">
+              <div className="bg-primary p-6 text-primary-foreground">
+                <h2 className="text-2xl font-display font-bold flex items-center gap-2">
+                   <Utensils className="w-6 h-6" /> Order Summary
+                </h2>
               </div>
               
-              <CardContent className="p-6 space-y-6">
-                <div className="flex justify-between items-center text-lg">
-                  <span className="text-slate-600 dark:text-slate-400">Subtotal</span>
-                  <strong className="text-slate-900 dark:text-white font-bold">₹{cartTotal}</strong>
+              <CardContent className="p-8 space-y-6">
+                <div className="flex justify-between items-center text-lg font-medium">
+                  <span className="text-muted-foreground">Item Subtotal</span>
+                  <strong className="text-foreground">₹{cartTotal}</strong>
                 </div>
-                <div className="flex justify-between items-center text-lg">
-                  <span className="text-slate-600 dark:text-slate-400">Delivery</span>
-                  <strong className="text-emerald-600 dark:text-emerald-400 font-bold">Free</strong>
+                <div className="flex justify-between items-center text-lg font-medium">
+                  <span className="text-muted-foreground">Platform Fee</span>
+                  <strong className="text-foreground">₹15</strong>
+                </div>
+                <div className="flex justify-between items-center text-lg font-medium">
+                  <span className="text-muted-foreground">Delivery</span>
+                  <strong className="text-primary font-bold">FREE</strong>
                 </div>
                 
-                <div className="h-px bg-slate-200 dark:bg-slate-800 my-4" />
+                <div className="h-px bg-border my-6" />
                 
-                <div className="flex justify-between items-center text-2xl">
-                  <span className="font-bold text-slate-900 dark:text-white">Total</span>
-                  <strong className="font-black text-emerald-600 dark:text-emerald-400">₹{cartTotal}</strong>
+                <div className="flex justify-between items-center text-3xl">
+                  <span className="font-display font-bold text-foreground">Total</span>
+                  <strong className="font-display font-black text-primary">₹{cartTotal + 15}</strong>
                 </div>
 
-                <div className="space-y-3 pt-6">
+                <div className="space-y-4 pt-8">
                   <Link to="/checkout" className="block">
-                    <Button size="lg" className="w-full text-lg shadow-lg shadow-emerald-500/20 py-6">
-                      <Wallet className="w-5 h-5 mr-2" /> Proceed to Checkout
+                    <Button size="lg" className="w-full text-xl h-16 shadow-xl shadow-primary/20 rounded-2xl">
+                      <Wallet className="w-6 h-6 mr-3" /> Checkout
                     </Button>
                   </Link>
-                  <Button variant="outline" size="lg" onClick={handleConfirmCOD} className="w-full text-lg py-6 border-slate-300 dark:border-slate-700">
-                    <Truck className="w-5 h-5 mr-2" /> Cash on Delivery
+                  <Button variant="outline" size="lg" onClick={handleConfirmCOD} className="w-full text-lg h-14 border-2 border-border font-bold rounded-2xl hover:bg-muted text-muted-foreground">
+                    <Truck className="w-5 h-5 mr-3" /> Cash on Delivery
                   </Button>
                 </div>
               </CardContent>
             </Card>
 
             {showQR && (
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="mt-6">
-                <Card className="bg-slate-900 text-white border-0 overflow-hidden relative">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/20 blur-[50px] rounded-full" />
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="mt-8">
+                <Card className="bg-foreground text-background border-0 overflow-hidden relative rounded-[2rem]">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-primary/30 blur-[50px] rounded-full" />
                   <CardContent className="p-8 text-center relative z-10">
-                    <h3 className="font-bold text-lg mb-2 flex justify-center items-center gap-2">
+                    <h3 className="font-display font-bold text-xl mb-2 flex justify-center items-center gap-2 text-background">
                       Instant UPI Payment
                     </h3>
-                    <p className="text-sm text-slate-400 mb-6">Scan with any UPI app to pay instantly</p>
-                    <div className="bg-white p-3 rounded-2xl inline-block shadow-xl mb-4">
+                    <p className="text-sm text-background/70 mb-6 font-medium">Scan with any UPI app to pay instantly</p>
+                    <div className="bg-white p-4 rounded-3xl inline-block shadow-2xl mb-4">
                       <QRCodeSVG value={upiLink} size={150} level="H" includeMargin={false} />
                     </div>
-                    <div className="text-sm">
-                      <div className="text-slate-300 mb-1">UPI ID: <strong className="text-white">{upiId}</strong></div>
-                      <div>Amount: <strong className="text-emerald-400 font-bold text-lg">₹{cartTotal}</strong></div>
+                    <div className="text-sm font-medium">
+                      <div className="text-background/80 mb-1">UPI ID: <strong className="text-background">{upiId}</strong></div>
+                      <div>Amount: <strong className="text-primary font-black text-xl">₹{cartTotal + 15}</strong></div>
                     </div>
                   </CardContent>
                 </Card>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { MapPin, Phone, User, CheckCircle2 } from 'lucide-react';
+import { MapPin, Phone, User, CheckCircle2, Navigation } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
@@ -32,72 +32,77 @@ export const CheckoutPage: React.FC = () => {
   return (
     <motion.div 
       initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}
-      className="w-full max-w-4xl mx-auto px-4 py-12"
+      className="w-full max-w-6xl mx-auto px-4 py-12"
     >
       <div className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">Secure Checkout</h1>
-        <p className="text-lg text-slate-500 dark:text-slate-400">Just a few details to get your fresh ingredients delivered.</p>
+        <h1 className="text-5xl md:text-6xl font-display font-extrabold text-foreground tracking-tight mb-4">Secure Checkout</h1>
+        <p className="text-xl font-medium text-muted-foreground">Just a few details to get your order delivered.</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         <div className="lg:col-span-8">
-          <Card className="border-0 shadow-2xl shadow-slate-200/50 dark:shadow-none bg-white dark:bg-slate-900 overflow-hidden">
-            <div className="h-2 w-full bg-gradient-to-r from-emerald-400 to-teal-500" />
-            <CardContent className="p-8 md:p-10">
-              <form onSubmit={handleSubmit} className="space-y-8">
+          <Card className="border-border shadow-2xl rounded-[2rem] bg-card overflow-hidden">
+            <div className="h-3 w-full bg-gradient-to-r from-primary to-accent-yellow" />
+            <CardContent className="p-8 md:p-12">
+              <form onSubmit={handleSubmit} className="space-y-10">
                 
                 {/* Contact Section */}
                 <div>
-                  <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
-                    <span className="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-sm">1</span>
+                  <h3 className="text-2xl font-display font-bold text-foreground mb-8 flex items-center gap-4">
+                    <span className="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-lg shadow-md">1</span>
                     Contact Information
                   </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2 relative">
-                      <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Full Name</label>
-                      <User className="absolute bottom-3 left-3 w-4 h-4 text-slate-400" />
-                      <Input name="name" required placeholder="John Doe" value={formData.name} onChange={handleChange} className="pl-10" />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="space-y-3 relative">
+                      <label className="text-sm font-bold text-foreground ml-1">Full Name</label>
+                      <User className="absolute bottom-4 left-4 w-5 h-5 text-muted-foreground" />
+                      <Input name="name" required placeholder="John Doe" value={formData.name} onChange={handleChange} className="pl-12 h-14 bg-muted border-none rounded-2xl" />
                     </div>
-                    <div className="space-y-2 relative">
-                      <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Phone Number</label>
-                      <Phone className="absolute bottom-3 left-3 w-4 h-4 text-slate-400" />
-                      <Input type="tel" name="phone" required placeholder="+91 9876543210" value={formData.phone} onChange={handleChange} className="pl-10" />
+                    <div className="space-y-3 relative">
+                      <label className="text-sm font-bold text-foreground ml-1">Phone Number</label>
+                      <Phone className="absolute bottom-4 left-4 w-5 h-5 text-muted-foreground" />
+                      <Input type="tel" name="phone" required placeholder="+91 9876543210" value={formData.phone} onChange={handleChange} className="pl-12 h-14 bg-muted border-none rounded-2xl" />
                     </div>
                   </div>
                 </div>
 
-                <div className="h-px bg-slate-100 dark:bg-slate-800" />
+                <div className="h-px bg-border" />
 
                 {/* Delivery Section */}
                 <div>
-                  <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
-                    <span className="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-sm">2</span>
-                    Delivery Address
-                  </h3>
-                  <div className="space-y-6">
-                    <div className="space-y-2 relative">
-                      <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Street Address</label>
-                      <MapPin className="absolute top-9 left-3 w-4 h-4 text-slate-400" />
+                  <div className="flex justify-between items-center mb-8">
+                    <h3 className="text-2xl font-display font-bold text-foreground flex items-center gap-4">
+                      <span className="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-lg shadow-md">2</span>
+                      Delivery Address
+                    </h3>
+                    <Button type="button" variant="outline" size="sm" className="rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-colors font-bold text-sm h-10 px-4">
+                      <Navigation className="w-4 h-4 mr-2" /> Locate Me
+                    </Button>
+                  </div>
+                  <div className="space-y-8">
+                    <div className="space-y-3 relative">
+                      <label className="text-sm font-bold text-foreground ml-1">Street Address</label>
+                      <MapPin className="absolute top-11 left-4 w-5 h-5 text-muted-foreground" />
                       <textarea 
                         name="address" required rows={3} placeholder="House/Flat No., Street" value={formData.address} onChange={handleChange}
-                        className="w-full pl-10 pr-4 py-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-md focus:ring-2 focus:ring-emerald-500 outline-none resize-none"
+                        className="w-full pl-12 pr-4 py-4 bg-muted border-none rounded-2xl focus:ring-2 focus:ring-primary outline-none resize-none font-medium"
                       />
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">City</label>
-                        <Input name="city" placeholder="Bengaluru" value={formData.city} onChange={handleChange} />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                      <div className="space-y-3">
+                        <label className="text-sm font-bold text-foreground ml-1">City</label>
+                        <Input name="city" placeholder="Bengaluru" value={formData.city} onChange={handleChange} className="h-14 bg-muted border-none rounded-2xl" />
                       </div>
-                      <div className="space-y-2">
-                        <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Pincode</label>
-                        <Input name="pincode" placeholder="560001" value={formData.pincode} onChange={handleChange} />
+                      <div className="space-y-3">
+                        <label className="text-sm font-bold text-foreground ml-1">Pincode</label>
+                        <Input name="pincode" placeholder="560001" value={formData.pincode} onChange={handleChange} className="h-14 bg-muted border-none rounded-2xl" />
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <Button type="submit" size="lg" className="w-full text-lg shadow-xl shadow-emerald-500/20 py-6">
-                  <CheckCircle2 className="w-5 h-5 mr-2" /> Confirm & Place Order
+                <Button type="submit" size="lg" className="w-full text-xl shadow-xl shadow-primary/20 h-16 rounded-2xl mt-4">
+                  <CheckCircle2 className="w-6 h-6 mr-3" /> Place Order (COD)
                 </Button>
               </form>
             </CardContent>
@@ -105,20 +110,31 @@ export const CheckoutPage: React.FC = () => {
         </div>
 
         <div className="lg:col-span-4">
-          <Card className="bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-800">
-            <CardContent className="p-6">
-              <h3 className="font-bold text-lg mb-4 pb-4 border-b border-slate-200 dark:border-slate-700">Order Brief</h3>
-              <div className="space-y-3 mb-6 max-h-[300px] overflow-y-auto">
+          <Card className="bg-muted border-border rounded-[2rem] sticky top-28">
+            <CardContent className="p-8">
+              <h3 className="font-display font-bold text-2xl mb-6 pb-4 border-b border-border">Order Brief</h3>
+              <div className="space-y-4 mb-8 max-h-[400px] overflow-y-auto">
                 {cartItems.map((item: any, i: number) => (
-                  <div key={i} className="flex justify-between items-center text-sm">
-                    <span className="text-slate-600 dark:text-slate-400 truncate pr-4">{item.quantity}x {item.name}</span>
-                    <span className="font-medium">₹{item.price}</span>
+                  <div key={i} className="flex justify-between items-start text-base font-medium">
+                    <span className="text-foreground flex-1 pr-4 leading-tight">{item.quantity}x {item.name}</span>
+                    <span className="font-bold text-primary shrink-0">₹{item.price}</span>
                   </div>
                 ))}
               </div>
-              <div className="pt-4 border-t border-slate-200 dark:border-slate-700 flex justify-between items-center">
-                <span className="font-bold text-lg">Total</span>
-                <span className="font-black text-2xl text-emerald-600 dark:text-emerald-400">₹{cartTotal}</span>
+              
+              <div className="pt-6 border-t border-border space-y-4">
+                <div className="flex justify-between items-center font-medium text-muted-foreground">
+                  <span>Subtotal</span>
+                  <span>₹{cartTotal}</span>
+                </div>
+                <div className="flex justify-between items-center font-medium text-muted-foreground">
+                  <span>Platform Fee</span>
+                  <span>₹15</span>
+                </div>
+                <div className="pt-4 flex justify-between items-center">
+                  <span className="font-display font-bold text-2xl text-foreground">Total</span>
+                  <span className="font-display font-black text-3xl text-primary">₹{cartTotal + 15}</span>
+                </div>
               </div>
             </CardContent>
           </Card>

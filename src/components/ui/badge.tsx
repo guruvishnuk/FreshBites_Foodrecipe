@@ -8,19 +8,21 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
 function Badge({ className, variant = "default", ...props }: BadgeProps) {
   const variants = {
     default:
-      "border-transparent bg-emerald-600 text-white shadow hover:bg-emerald-700",
+      "border-transparent bg-primary text-primary-foreground shadow hover:bg-primary-hover",
     secondary:
-      "border-transparent bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700",
+      "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
     destructive:
-      "border-transparent bg-red-500 text-white shadow hover:bg-red-600",
-    outline: "text-slate-950 dark:text-slate-50",
+      "border-transparent bg-accent-red text-white shadow hover:bg-accent-red/80",
+    outline: "text-foreground border-border",
+    yellow: "border-transparent bg-accent-yellow text-yellow-950 shadow",
+    green: "border-transparent bg-accent-green text-green-950 shadow",
   }
   
   return (
     <div
       className={cn(
-        "inline-flex items-center rounded-full border border-slate-200 dark:border-slate-800 px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:focus:ring-emerald-400",
-        variants[variant],
+        "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-bold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+        variants[variant as keyof typeof variants] || variants.default,
         className
       )}
       {...props}

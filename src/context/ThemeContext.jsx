@@ -5,15 +5,19 @@ const ThemeContext = createContext();
 export const ThemeProvider = ({ children }) => {
   const [darkMode, setDarkMode] = useState(() => {
     const saved = localStorage.getItem('freshbite_theme');
-    return saved ? JSON.parse(saved) : false;
+    if (saved) return JSON.parse(saved);
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
   });
 
   useEffect(() => {
     localStorage.setItem('freshbite_theme', JSON.stringify(darkMode));
+    const root = document.documentElement;
     if (darkMode) {
-      document.body.classList.add('dark-mode');
+      root.classList.add('dark');
+      root.classList.remove('light');
     } else {
-      document.body.classList.remove('dark-mode');
+      root.classList.add('light');
+      root.classList.remove('dark');
     }
   }, [darkMode]);
 

@@ -2,14 +2,77 @@
 @source "../index.html";
 @source "../src";
 
-/* Custom global styles can go here if needed */
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f9f9f9;
-  color: #333;
+@theme {
+  --font-sans: 'Inter', sans-serif;
+  --font-display: 'Fredoka', sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+
+  --color-accent-yellow: #FACC15;
+  --color-accent-red: #EF4444;
+  --color-accent-green: #84CC16;
 }
 
-body.dark-mode {
-  background-color: #1a1a1a;
-  color: #f0f0f0;
+@layer base {
+  :root {
+    --background: #FFFBF5;
+    --foreground: #1F2937;
+    --card: #FFFFFF;
+    --card-foreground: #1F2937;
+    --primary: #FF6B4A;
+    --primary-hover: #E85D3F;
+    --primary-foreground: #FFFFFF;
+    --secondary: #2E7D32;
+    --secondary-foreground: #FFFFFF;
+    --muted: #FAF7F0;
+    --muted-foreground: #4B5563;
+    --border: #F3F4F6;
+    --ring: #FF6B4A;
+    --radius: 1rem;
+  }
+
+  .dark {
+    --background: #17151F;
+    --foreground: #F3F4F6;
+    --card: #1A1523;
+    --card-foreground: #F3F4F6;
+    --primary: #FF6B4A;
+    --primary-hover: #E85D3F;
+    --primary-foreground: #FFFFFF;
+    --secondary: #8B5CF6;
+    --secondary-foreground: #FFFFFF;
+    --muted: #2D273A;
+    --muted-foreground: #9CA3AF;
+    --border: #373046;
+    --ring: #FF6B4A;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased transition-colors duration-300;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-wide;
+  }
 }

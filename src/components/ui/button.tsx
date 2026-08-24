@@ -15,25 +15,25 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     
     // Simple custom variants mapping
     const variants = {
-      default: "bg-emerald-600 text-white hover:bg-emerald-700 shadow-md",
-      destructive: "bg-red-500 text-white hover:bg-red-600",
-      outline: "border border-slate-300 dark:border-slate-700 bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-900 dark:text-slate-100",
-      secondary: "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700",
-      ghost: "hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-900 dark:text-slate-100",
-      link: "text-emerald-600 underline-offset-4 hover:underline",
+      default: "bg-primary text-primary-foreground hover:bg-primary-hover shadow-lg shadow-primary/20",
+      destructive: "bg-accent-red text-white hover:bg-red-600 shadow-md",
+      outline: "border-2 border-border bg-transparent hover:bg-muted text-foreground",
+      secondary: "bg-secondary text-secondary-foreground hover:bg-opacity-90 shadow-md",
+      ghost: "hover:bg-muted text-foreground",
+      link: "text-primary underline-offset-4 hover:underline",
     }
 
     const sizes = {
-      default: "h-10 px-4 py-2",
-      sm: "h-9 rounded-md px-3",
-      lg: "h-12 rounded-md px-8 text-lg",
-      icon: "h-10 w-10",
+      default: "h-11 px-5 py-2",
+      sm: "h-9 rounded-full px-4",
+      lg: "h-14 rounded-full px-10 text-lg",
+      icon: "h-11 w-11",
     }
 
     return (
       <Comp
         className={cn(
-          "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:ring-offset-slate-950 dark:focus-visible:ring-emerald-400",
+          "inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-semibold ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-95 hover:scale-[1.02]",
           variants[variant],
           sizes[size],
           className
