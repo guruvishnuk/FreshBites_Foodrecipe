@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Star, Clock } from 'lucide-react';
 import { Card, CardContent } from './ui/card';
 
@@ -23,9 +24,10 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
   const isVeg = Math.random() > 0.3; // 70% chance to be veg
 
   return (
-    <Link to={`/recipe/${recipe.id}`} className="block group">
-      <Card className="flex flex-col h-full overflow-hidden border-0 shadow-none bg-transparent hover:scale-[1.02] transition-transform duration-300">
-        <div className="relative h-48 sm:h-64 overflow-hidden rounded-[24px] shadow-sm ring-1 ring-border group-hover:ring-primary/30 transition-all">
+    <Link to={`/recipes/${recipe.id}`} className="block group">
+      <motion.div whileHover={{ y: -8, scale: 1.02 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
+      <Card className="flex flex-col h-full overflow-hidden border-0 shadow-none bg-transparent transition-transform duration-300">
+        <div className="relative h-48 sm:h-64 overflow-hidden rounded-[24px] shadow-sm ring-1 ring-border group-hover:ring-primary/30 group-hover:shadow-xl transition-all duration-300">
           <img 
             src={recipe.image} 
             alt={recipe.title} 
@@ -75,6 +77,7 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
           </p>
         </CardContent>
       </Card>
+      </motion.div>
     </Link>
   );
 };
